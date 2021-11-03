@@ -39,10 +39,9 @@ Copyright (c) 2021 Frank Proulx
 
 ## TODO
 
-1. Start new game with chosen mark
-2. End game with output
-3. Design output
-4. Hard mode
+* Start new game with chosen mark
+* Design output
+* Hard mode
 
 ### Tests
 

@@ -9,6 +9,17 @@
 </head>
 <body>
   <div class="container">
+    <div id="game-controls">
+      <div class="row">
+        <div class="col-md-4">
+          <button id="o-button" class="btn btn-success">Play as O</button>
+          <button id="x-button" class="btn btn-success">Play as X</button>
+        </div>
+        <div class="col-md-8">
+          <h1 id="winner"></h1>
+        </div>
+      </div>
+    </div>
     <div class="game-board">
       <div class="wrapper">
         <div id="square11" class="game-square"></div>
@@ -27,7 +38,6 @@
       </div>
     </div>
     <div class="game-output">
-      <h1 id="winner"></h1>
       <div class="wrapper">
         <div id="endSquare11" class="end-square"></div>
         <div id="endSquare12" class="end-square"></div>

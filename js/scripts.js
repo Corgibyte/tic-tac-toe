@@ -141,11 +141,34 @@ $(document).ready(function() {
     const ycoord = parseInt(squareVal.charAt(1));
     currentGame.takeTurn(xcoord, ycoord);
     updateSquares(currentGame);
-    if (currentGame.whoWon() !== "" || currentGame.isFull()) {
+    if (currentGame.whoWon() !== "") {
+      $("#winner").show();
       $(".game-board").hide();
       updateEndSquares(currentGame);
       $(".game-output").show();
       $("#winner").text(currentGame.whoWon() + " Won!");
+    } else if (currentGame.isFull()) {
+      $("#winner").show();
+      $(".game-board").hide();
+      updateEndSquares(currentGame);
+      $(".game-output").show();
+      $("#winner").text("It's a tie!");
     }
-  })
+  });
+
+  $("#x-button").click(function() {
+    currentGame = new Game(new Player("X"));
+    updateSquares(currentGame);
+    $(".game-board").show();
+    $(".game-output").hide();
+    $("#winner").hide();
+  });
+
+  $("#o-button").click(function() {
+    currentGame = new Game(new Player("O"));
+    updateSquares(currentGame);
+    $(".game-board").show();
+    $(".game-output").hide();
+    $("#winner").hide();
+  });
 });
