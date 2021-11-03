@@ -42,7 +42,7 @@ Copyright (c) 2021 Frank Proulx
 #### Describe Player(mark) 
 Creates a new Player object with the given mark.
 
-**Code:*
+**Code:**
     let testPlayer = new Player("X");
     testPlayer;
 
@@ -120,27 +120,3 @@ Creates a new game with the specified player and a fresh board.
 
 **Result:**
     TODO
-
-Player
-  Properties
-    Mark
-  Methods    
-Space
-  Properties
-    currentMark
-    Coordinates
-  Methods
-    .mark(player)
-Board
-  Properties
-    Spaces
-  Methods
-    .getSpace(coords)
-Game
-  Properties
-    Board
-    Player
-    Strategy
-  Methods
-    isOver
-    takeTurn(coords)
