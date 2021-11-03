@@ -8,7 +8,7 @@ function Space(x, y) {
   this.y = y;
 }
 
-Space.prototype.mark = function(player) {
+Space.prototype.markSpace = function(player) {
   this.mark = player.mark;
 };
 
@@ -39,10 +39,33 @@ function Game(player) {
 }
 
 Game.prototype.isOver = function() {
-  //TODO
-};
+  //Check rows
+  for (let row = 1; row < 4; row++) {
+    if (this.board.getSpace(row,1).mark !== "" && this.board.getSpace(row, 1).mark === this.board.getSpace(row, 2).mark && this.board.getSpace(row, 1).mark === this.board.getSpace(row, 3).mark) {
+      return true;
+    }
+  }
+  //Check columns
+  for (let col = 1; col < 4; col++) {
+    if (this.board.getSpace(1, col).mark !== "" && this.board.getSpace(1, col).mark === this.board.getSpace(2, col).mark && this.board.getSpace(1, col).mark === this.board.getSpace(3, col).mark) {
+      return true;
+    }
+  }
 
+  //Check diagonals {(1,1),(2,2),(3,3) or (1,3),(2,2),(3,1)}
+  const diag1 = this.board.getSpace(1,1).mark !== "" && this.board.getSpace(1,1).mark === this.board.getSpace(2,2).mark && this.board.getSpace(1,1).mark === this.board.getSpace(3,3).mark;
+  const diag2 = this.board.getSpace(1,3).mark !== "" && this.board.getSpace(1,3).mark === this.board.getSpace(2,2).mark && this.board.getSpace(1,3).mark === this.board.getSpace(3,1).mark;
+  if (diag1 || diag2) {
+    return true;
+  }
+  else return false;
+}
 Game.prototype.takeTurn = function(x, y) {
-  //TODO
+  if (this.board.getSpace(x,y).mark !== "") {
+    return false;
+  } else {
+    this.board.getSpace(x,y).markSpace(this.player);
+    return true;
+  }
 };
 

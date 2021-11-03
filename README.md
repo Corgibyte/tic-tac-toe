@@ -111,6 +111,36 @@ Creates a new game with the specified player and a fresh board.
 **Result:**
     false
 
+**Test:** Will return true if there's a row complete
+**Code:*
+    let testGame = new Game(new Player("X"));
+    testGame.takeTurn(1,1);
+    testGame.takeTurn(1,2);
+    testGame.takeTurn(1,3);
+
+**Result:**
+    true
+
+**Test:** Will return true if there's a col complete
+**Code:*
+    let testGame = new Game(new Player("X"));
+    testGame.takeTurn(1,2);
+    testGame.takeTurn(2,2);
+    testGame.takeTurn(3,2);
+
+**Result:**
+    true
+
+**Test:** Will return if there's a diagonal complete
+**Code:*
+    let testGame = new Game(new Player("X"));
+    testGame.takeTurn(1,1);
+    testGame.takeTurn(2,2);
+    testGame.takeTurn(3,3);
+
+**Result:**
+    true
+
 ### Describe Game.prototype.takeTurn(coords)
 
 **Code:*
