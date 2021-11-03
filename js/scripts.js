@@ -100,3 +100,29 @@ Game.prototype.takeAITurn = function() {
     }
   } 
 };
+
+//UI Logic
+function updateSquares(game) {
+  // Updates every square
+  $("#square11").html(game.board.getSpace(1,1).mark);
+  $("#square12").html(game.board.getSpace(1,2).mark);
+  $("#square13").html(game.board.getSpace(1,3).mark);
+  $("#square21").html(game.board.getSpace(2,1).mark);
+  $("#square22").html(game.board.getSpace(2,2).mark);
+  $("#square23").html(game.board.getSpace(2,3).mark);
+  $("#square31").html(game.board.getSpace(3,1).mark);
+  $("#square32").html(game.board.getSpace(3,2).mark);
+  $("#square33").html(game.board.getSpace(3,3).mark);
+}
+
+$(document).ready(function() {
+  let currentGame = new Game(new Player("X"));
+  
+  $(".game-square").click(function(event) {
+    const squareVal = $(this).attr("id").slice(6);
+    const xcoord = parseInt(squareVal.charAt(0));
+    const ycoord = parseInt(squareVal.charAt(1));
+    currentGame.takeTurn(xcoord, ycoord);
+    updateSquares(currentGame);    
+  })
+});
