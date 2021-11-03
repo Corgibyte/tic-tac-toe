@@ -1,6 +1,6 @@
-# _{Application Name}_
+# Tic Tac Toe
 
-#### By _**{List of contributors}**_
+#### By Frank Proulx & Hannah Young
 
 #### _{Brief description of application}_
 
@@ -19,10 +19,10 @@ _{This is a detailed description of your application. Give as much detail as nee
 
 * Create and/or navigate to the directory you would like to contain this project on your computer.
 * Initialize a git repository by typing **git init** in the terminal.
-* Type **git clone https://github.com/Frank-Proulx/insert_name_here** to clone the repository to your local machine.
-* Open the file "index.html" in the newly created "portfolio-landing" folder using either the GUI in your finder window, or typing **cd insert_name_here** and pressing return to navigate into the project folder, and then typing **open index.html** in the terminal from within the **insert_name_here** folder.  
+* Type **git clone https://github.com/Frank-Proulx/tic-tac-toe** to clone the repository to your local machine.
+* Open the file "index.html" in the newly created "portfolio-landing" folder using either the GUI in your finder window, or typing **cd tic-tac-toe** and pressing return to navigate into the project folder, and then typing **open index.html** in the terminal from within the **tic-tac-toe** folder.  
 
-## Link to [GitHub Pages](https://frank-proulx.github.io//)
+## Link to [GitHub Pages](https://frank-proulx.github.io/tic-tac-toe/)
 
 ## Known Bugs
 
@@ -36,6 +36,13 @@ _{This is a detailed description of your application. Give as much detail as nee
 If you have any issues, questions, ideas or concerns, please reach out to me at my email and/or make a contribution to the code via GitHub.
 
 Copyright (c) 2021 Frank Proulx
+
+## TODO
+
+1. Start new game with chosen mark
+2. End game with output
+3. Design output
+4. Hard mode
 
 ### Tests
 
