@@ -1,5 +1,10 @@
 function Player(mark) {
   this.mark = mark;
+  if (this.mark === "X") {
+    this.AIMark = "O";
+  } else {
+    this.AIMark = "X";
+  }
 }
 
 function Space(x, y) {
@@ -58,14 +63,40 @@ Game.prototype.isOver = function() {
   if (diag1 || diag2) {
     return true;
   }
-  else return false;
+  let isFull = true;
+  for (let row = 1; row < 4 && isFull; row++) {
+    for (let col = 1; col < 4 && isFull; col++) {
+      if (this.board.getSpace(row,col).mark == "") {
+        isFull = false;
+      }
+    }
+  }
+  return isFull;
 }
+
 Game.prototype.takeTurn = function(x, y) {
   if (this.board.getSpace(x,y).mark !== "") {
     return false;
-  } else {
-    this.board.getSpace(x,y).markSpace(this.player);
-    return true;
   }
+  this.board.getSpace(x,y).markSpace(this.player);
+  if (!this.isOver()) {
+    this.takeAITurn();
+  }
+  return true;
 };
 
+function getRandomCoord() {
+  return Math.floor(Math.random() * (4 - 1) + 1); //The maximum is exclusive and the minimum is inclusive
+}
+
+Game.prototype.takeAITurn = function() {
+  let turnTaken = false;
+  while (!turnTaken) {
+    let x = getRandomCoord();
+    let y = getRandomCoord();
+    if (this.board.getSpace(x, y).mark === "") {
+      this.board.getSpace(x, y).mark = this.player.AIMark;
+      turnTaken = true;
+    }
+  } 
+};
