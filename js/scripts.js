@@ -113,17 +113,13 @@ function areSpacesEqual(space1, space2, space3) {
   }
 }
 
-Game.prototype.takeAITurnHard = function() {
-  // 1. Win: If the player has two in a row, they can place a third to get three in a row.
-  
-  // Test each row and each col and each diag
-  
+Game.prototype.thirdMark = function(testMark) {
   for (let col = 1; col < 4; col++) {
     let markCounter = 0;
     let emptyCounter = 0;
     let emptyIndex = 0;
     for (let row = 1; row < 4; row++) {
-      if (this.board.getSpace(row,col).mark === this.player.AIMark) {
+      if (this.board.getSpace(row,col).mark === testMark) {
         markCounter++;
       } else if (this.board.getSpace(row,col).mark === ""){ 
         emptyCounter++;
@@ -140,7 +136,7 @@ Game.prototype.takeAITurnHard = function() {
     let emptyCounter = 0;
     let emptyIndex = 0;
     for (let col = 1; col < 4; col++) {
-      if (this.board.getSpace(row,col).mark === this.player.AIMark) {
+      if (this.board.getSpace(row,col).mark === testMark) {
         markCounter++;
       } else if (this.board.getSpace(row,col).mark === ""){ 
         emptyCounter++;
@@ -161,7 +157,7 @@ Game.prototype.takeAITurnHard = function() {
   for (let i = 0; i < 3; i++) {
     let currentRow = backwardDiagonal[i][0];
     let currentCol = backwardDiagonal[i][1];
-    if (this.board.getSpace(currentRow, currentCol).mark === this.player.AIMark) {
+    if (this.board.getSpace(currentRow, currentCol).mark === testMark) {
       markCounter++;
     } else if (this.board.getSpace(currentRow, currentCol).mark === "") {
       emptyCounter++;
@@ -180,7 +176,7 @@ Game.prototype.takeAITurnHard = function() {
   for (let i = 0; i < 3; i++) {
     let currentRow = forwardDiagonal[i][0];
     let currentCol = forwardDiagonal[i][1];
-    if (this.board.getSpace(currentRow, currentCol).mark === this.player.AIMark) {
+    if (this.board.getSpace(currentRow, currentCol).mark === testMark) {
       markCounter++;
     } else if (this.board.getSpace(currentRow, currentCol).mark === "") {
       emptyCounter++;
@@ -192,7 +188,19 @@ Game.prototype.takeAITurnHard = function() {
       return true;
     }
   }
-  //2. Block: If the opponent has two in a row, the player must play the third themselves to block the opponent.
+  return false;
+};
+
+Game.prototype.takeAITurnHard = function() {
+  // 1. Win: If the player has two in a row, they can place a third to get three in a row.
+  if (this.thirdMark(this.player.AIMark)) {
+    return true;
+  } 
+  if (this.thirdMark(this.player.mark)) {
+    return true;
+  }
+//2. Block: If the opponent has two in a row, the player must play the third themselves to block the opponent.
+  
   //3. Fork: Cause a scenario where the player has two ways to win (two non-blocked lines of 2).
   //4. Blocking an opponent's fork: If there is only one possible fork for the opponent, the player should block it. Otherwise, the player should block all forks in any way that simultaneously allows them to make two in a row. Otherwise, the player should make a two in a row to force the opponent into defending, as long as it does not result in them producing a fork. For example, if "X" has two opposite corners and "O" has the center, "O" must not play a corner move to win. (Playing a corner move in this scenario produces a fork for "X" to win.)
   //5. Center: A player marks the center. (If it is the first move of the game, playing a corner move gives the second player more opportunities to make a mistake and may therefore be the better choice; however, it makes no difference between perfect players.)
