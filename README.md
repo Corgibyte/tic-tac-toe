@@ -14,7 +14,7 @@
 
 ## Description
 
-A simple website that allows you to play tic tac toe. It provides the player with the choice of X or O, and then displays the result of the game.
+A simple website that allows you to play tic tac toe. It provides the player with the choice of X or O, and allows a choice between easy mode (random AI moves) and hard mode (as described [here](https://en.wikipedia.org/wiki/Tic-tac-toe#Strategy)), then displays the result of the game.
 
 ## Setup/Installation Requirements
 
@@ -27,8 +27,7 @@ A simple website that allows you to play tic tac toe. It provides the player wit
 
 ## Known Bugs
 
-* _Any known issues_
-* _should go here_
+* No known bugs
 
 ## License
 
@@ -37,12 +36,6 @@ A simple website that allows you to play tic tac toe. It provides the player wit
 If you have any issues, questions, ideas or concerns, please reach out to me at my email and/or make a contribution to the code via GitHub.
 
 Copyright (c) 2021 Frank Proulx & Hannah Young
-
-## TODO
-
-* Start new game with chosen mark
-* Design output
-* Hard mode
 
 ### Tests
 
