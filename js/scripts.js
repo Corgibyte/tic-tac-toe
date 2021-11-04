@@ -113,6 +113,14 @@ function areSpacesEqual(space1, space2, space3) {
   }
 }
 
+function arrayContainsPoint(array, row, col) {
+  let containsPoint = false;
+  for (let i = 0; i < array.length && !containsPoint; i++) {
+    containsPoint = array[i][0] === row && array[i][1] === col;
+  }
+  return containsPoint;
+}
+
 Game.prototype.thirdMark = function(testMark) {
   for (let col = 1; col < 4; col++) {
     let markCounter = 0;
@@ -191,19 +199,112 @@ Game.prototype.thirdMark = function(testMark) {
   return false;
 };
 
+Game.prototype.takeFork = function(testMark) {
+  let forkArray = [];
+  for (let row = 1; row < 4; row++) {
+    let markCounter = 0;
+    let emptyCounter = 0;
+    let emptySpacesArray = [];
+    for (let col = 1; col < 4; col++) {
+      if (this.board.getSpace(row,col).mark === testMark) {
+        markCounter++;
+      }
+      if (this.board.getSpace(row,col).mark === "") {
+        emptyCounter++;
+        emptySpacesArray.push([row,col]);
+      }
+    }
+    if (markCounter === 1 && emptyCounter === 2) {
+      forkArray.push(emptySpacesArray[0]);
+      forkArray.push(emptySpacesArray[1]);
+    }
+  }
+  for (let col = 1; col < 4; col++) {
+    let markCounter = 0;
+    let emptyCounter = 0;
+    let emptySpacesArray = [];
+    for (let row = 1; row < 4; row++) {
+      if (this.board.getSpace(row,col).mark === testMark) {
+        markCounter++;
+      }
+      if (this.board.getSpace(row,col).mark === "") {
+        emptyCounter++;
+        emptySpacesArray.push([row,col]);
+      }
+    }
+    if (markCounter === 1 && emptyCounter === 2) {
+      forkArray.push(emptySpacesArray[0]);
+      forkArray.push(emptySpacesArray[1]);
+    }
+  }
+  const backwardDiagonal = [[1,1],[2,2],[3,3]];
+  const forwardDiagonal = [[1,3],[2,2],[3,1]];
+  let markCounter = 0;
+  let emptyCounter = 0;
+  let emptySpacesArray = [];
+  for (let i = 0; i < 3; i++) {
+    let currentRow = backwardDiagonal[i][0];
+    let currentCol = backwardDiagonal[i][1];
+    if (this.board.getSpace(currentRow, currentCol).mark === testMark) {
+      markCounter++;
+    } else if (this.board.getSpace(currentRow, currentCol).mark === "") {
+      emptyCounter++;
+      emptySpacesArray.push([currentRow, currentCol]);
+    }
+    if (markCounter === 1 && emptyCounter === 2) {
+      forkArray.push(emptySpacesArray[0]);
+      forkArray.push(emptySpacesArray[1]);
+    }
+  }
+  markCounter = 0;
+  emptyCounter = 0;
+  emptySpacesArray = [];
+  for (let i = 0; i < 3; i++) {
+    let currentRow = forwardDiagonal[i][0];
+    let currentCol = forwardDiagonal[i][1];
+    if (this.board.getSpace(currentRow, currentCol).mark === testMark) {
+      markCounter++;
+    } else if (this.board.getSpace(currentRow, currentCol).mark === "") {
+      emptyCounter++;
+      emptySpacesArray.push([currentRow, currentCol]);
+    }
+    if (markCounter === 1 && emptyCounter === 2) {
+      forkArray.push(emptySpacesArray[0]);
+      forkArray.push(emptySpacesArray[1]);
+    }
+  }
+  for (let i = 0; i < forkArray.length; i++) {
+    const testElement = forkArray.pop();
+    if (arrayContainsPoint(forkArray,testElement[0],testElement[1])) {
+      this.board.getSpace(testElement[0], testElement[1]).mark = this.player.AIMark; 
+      return true;
+    }
+  }
+  return false;
+};
+
 Game.prototype.takeAITurnHard = function() {
   // 1. Win: If the player has two in a row, they can place a third to get three in a row.
   if (this.thirdMark(this.player.AIMark)) {
     return true;
   } 
+  //2. Block: If the opponent has two in a row, the player must play the third themselves to block the opponent.
   if (this.thirdMark(this.player.mark)) {
     return true;
   }
-//2. Block: If the opponent has two in a row, the player must play the third themselves to block the opponent.
-  
   //3. Fork: Cause a scenario where the player has two ways to win (two non-blocked lines of 2).
+  if (this.takeFork(this.player.AIMark)) {
+    return true;
+  }
   //4. Blocking an opponent's fork: If there is only one possible fork for the opponent, the player should block it. Otherwise, the player should block all forks in any way that simultaneously allows them to make two in a row. Otherwise, the player should make a two in a row to force the opponent into defending, as long as it does not result in them producing a fork. For example, if "X" has two opposite corners and "O" has the center, "O" must not play a corner move to win. (Playing a corner move in this scenario produces a fork for "X" to win.)
+  if (this.takeFork(this.player.mark)) {
+    return true;
+  }  
   //5. Center: A player marks the center. (If it is the first move of the game, playing a corner move gives the second player more opportunities to make a mistake and may therefore be the better choice; however, it makes no difference between perfect players.)
+  if (this.board.getSpace(2,2).mark === "") {
+    
+  }
+  
   //6. Opposite corner: If the opponent is in the corner, the player plays the opposite corner.
   //7. Empty corner: The player plays in a corner square.
   //8. Empty side: The player plays in a middle square on any of the four sides.

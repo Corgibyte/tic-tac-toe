@@ -150,10 +150,16 @@ Creates a new game with the specified player and a fresh board.
 
 ### Describe Game.prototype.takeTurn(coords)
 
-**Code:*
+**Code:**
     const testPlayer = new Player("X");
     let testGame = new Game(testPlayer);
     testGame.takeTurn(1,1);
 
 **Result:**
     TODO
+
+**Code:**
+    currentGame.board.getSpace(1,2).mark = "O";
+    currentGame.board.getSpace(2,3).mark = "O";
+    currentGame.takeAITurnHard();
+    updateSquares(currentGame);
