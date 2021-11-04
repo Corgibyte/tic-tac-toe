@@ -118,11 +118,11 @@ Game.prototype.takeAITurnHard = function() {
   
   // Test each row and each col and each diag
   
-  for (let col = 1; i < 4; i++) {
+  for (let col = 1; col < 4; col++) {
     let markCounter = 0;
     let emptyCounter = 0;
     let emptyIndex = 0;
-    for (let row = 1; i < 4; i++) {
+    for (let row = 1; row < 4; row++) {
       if (this.board.getSpace(row,col).mark === this.player.AIMark) {
         markCounter++;
       } else if (this.board.getSpace(row,col).mark === ""){ 
@@ -135,11 +135,11 @@ Game.prototype.takeAITurnHard = function() {
       return true;
     }
   }
-  for (let row = 1; i < 4; i++) {
+  for (let row = 1; row < 4; row++) {
     let markCounter = 0;
     let emptyCounter = 0;
     let emptyIndex = 0;
-    for (let col = 1; i < 4; i++) {
+    for (let col = 1; col < 4; col++) {
       if (this.board.getSpace(row,col).mark === this.player.AIMark) {
         markCounter++;
       } else if (this.board.getSpace(row,col).mark === ""){ 
@@ -228,8 +228,8 @@ function updateEndSquares(game) {
   $("#endSquare33").html(game.board.getSpace(3,3).mark);
 }
 
+let currentGame = new Game(new Player("X"));
 $(document).ready(function() {
-  let currentGame = new Game(new Player("X"));
 
   $(".game-square").click(function(event) {
     const squareVal = $(this).attr("id").slice(6);
