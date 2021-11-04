@@ -333,15 +333,15 @@ Game.prototype.takeAITurnHard = function() {
     return true;
   }
   if (this.board.getSpace(3,1).mark === "") {
-    this.board.getSpace(1,1).mark = this.player.AIMark;
+    this.board.getSpace(3,1).mark = this.player.AIMark;
     return true;
   }
   if (this.board.getSpace(3,3).mark === "") {
-    this.board.getSpace(1,1).mark = this.player.AIMark;
+    this.board.getSpace(3,3).mark = this.player.AIMark;
     return true;
   }
   if (this.board.getSpace(1,3).mark === "") {
-    this.board.getSpace(1,1).mark = this.player.AIMark;
+    this.board.getSpace(1,3).mark = this.player.AIMark;
     return true;
   }
   //8. Empty side: The player plays in a middle square on any of the four sides.
