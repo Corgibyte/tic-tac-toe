@@ -41,6 +41,7 @@ Board.prototype.getSpace = function(x, y) {
 function Game(player) {
   this.player = player;
   this.board = new Board();
+  this.hardMode = false;
 }
 
 Game.prototype.whoWon = function() {
@@ -84,7 +85,11 @@ Game.prototype.takeTurn = function(x, y) {
   }
   this.board.getSpace(x,y).markSpace(this.player);
   if (this.whoWon() === "" && !this.isFull()) {
-    this.takeAITurnHard();
+    if (this.hardMode) {
+      this.takeAITurnHard();
+    } else {
+      this.takeAITurn();
+    }
   }
   return true;
 };
@@ -395,7 +400,9 @@ $(document).ready(function() {
   });
 
   $("#x-button").click(function() {
+    const currentHardMode = currentGame.hardMode;
     currentGame = new Game(new Player("X"));
+    currentGame.hardMode = currentHardMode;
     updateSquares(currentGame);
     $(".game-board").show();
     $(".game-output").hide();
@@ -403,10 +410,22 @@ $(document).ready(function() {
   });
 
   $("#o-button").click(function() {
+    const currentHardMode = currentGame.hardMode;
     currentGame = new Game(new Player("O"));
+    currentGame.takeAITurn();
+    currentGame.hardMode = currentHardMode;
     updateSquares(currentGame);
     $(".game-board").show();
     $(".game-output").hide();
     $("#winner").hide();
+  });
+
+  $("#difficulty").click(function() {
+    currentGame.hardMode = !currentGame.hardMode;
+    if (currentGame.hardMode) {
+      $("#mode-status").text("Hard mode");
+    } else {
+      $("#mode-status").text("Easy mode");
+    }
   });
 });
