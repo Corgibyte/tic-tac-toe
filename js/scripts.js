@@ -84,7 +84,7 @@ Game.prototype.takeTurn = function(x, y) {
   }
   this.board.getSpace(x,y).markSpace(this.player);
   if (this.whoWon() === "" && !this.isFull()) {
-    this.takeAITurn();
+    this.takeAITurnHard();
   }
   return true;
 };
@@ -302,11 +302,43 @@ Game.prototype.takeAITurnHard = function() {
   }  
   //5. Center: A player marks the center. (If it is the first move of the game, playing a corner move gives the second player more opportunities to make a mistake and may therefore be the better choice; however, it makes no difference between perfect players.)
   if (this.board.getSpace(2,2).mark === "") {
-    
-  }
-  
+    this.board.getSpace(2,2).mark = this.player.AIMark;
+    return true;
+  }  
   //6. Opposite corner: If the opponent is in the corner, the player plays the opposite corner.
+  if (this.board.getSpace(1,1).mark === this.player.mark && this.board.getSpace(3,3).mark === "") {
+    this.board.getSpace(3,3).mark = this.player.AIMark;
+    return true;
+  }
+  if (this.board.getSpace(1,3).mark === this.player.mark && this.board.getSpace(3,1).mark === "") {
+    this.board.getSpace(3,1).mark = this.player.AIMark;
+    return true;
+  }
+  if (this.board.getSpace(3,3).mark === this.player.mark && this.board.getSpace(1,1).mark === "") {
+    this.board.getSpace(1,1).mark = this.player.AIMark;
+    return true;
+  }
+  if (this.board.getSpace(3,1).mark === this.player.mark && this.board.getSpace(1,3).mark === "") {
+    this.board.getSpace(1,3).mark = this.player.AIMark;
+    return true;
+  }
   //7. Empty corner: The player plays in a corner square.
+  if (this.board.getSpace(1,1).mark === "") {
+    this.board.getSpace(1,1).mark = this.player.AIMark;
+    return true;
+  }
+  if (this.board.getSpace(3,1).mark === "") {
+    this.board.getSpace(1,1).mark = this.player.AIMark;
+    return true;
+  }
+  if (this.board.getSpace(3,3).mark === "") {
+    this.board.getSpace(1,1).mark = this.player.AIMark;
+    return true;
+  }
+  if (this.board.getSpace(1,3).mark === "") {
+    this.board.getSpace(1,1).mark = this.player.AIMark;
+    return true;
+  }
   //8. Empty side: The player plays in a middle square on any of the four sides.
 };
 
