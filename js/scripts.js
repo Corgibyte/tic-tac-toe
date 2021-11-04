@@ -340,6 +340,7 @@ Game.prototype.takeAITurnHard = function() {
     return true;
   }
   //8. Empty side: The player plays in a middle square on any of the four sides.
+  return this.takeAITurn();
 };
 
 //UI Logic
