@@ -105,6 +105,102 @@ Game.prototype.takeAITurn = function() {
   } 
 };
 
+function areSpacesEqual(space1, space2, space3) {
+  if (space1.mark === space2.mark && space1.mark === space3.mark) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Game.prototype.takeAITurnHard = function() {
+  // 1. Win: If the player has two in a row, they can place a third to get three in a row.
+  
+  // Test each row and each col and each diag
+  
+  for (let col = 1; i < 4; i++) {
+    let markCounter = 0;
+    let emptyCounter = 0;
+    let emptyIndex = 0;
+    for (let row = 1; i < 4; i++) {
+      if (this.board.getSpace(row,col).mark === this.player.AIMark) {
+        markCounter++;
+      } else if (this.board.getSpace(row,col).mark === ""){ 
+        emptyCounter++;
+        emptyIndex = row;
+      }
+    }
+    if (markCounter === 2 && emptyCounter === 1) {
+      this.board.getSpace(emptyIndex, col).mark = this.player.AIMark;
+      return true;
+    }
+  }
+  for (let row = 1; i < 4; i++) {
+    let markCounter = 0;
+    let emptyCounter = 0;
+    let emptyIndex = 0;
+    for (let col = 1; i < 4; i++) {
+      if (this.board.getSpace(row,col).mark === this.player.AIMark) {
+        markCounter++;
+      } else if (this.board.getSpace(row,col).mark === ""){ 
+        emptyCounter++;
+        emptyIndex = col;
+      }
+    }
+    if (markCounter === 2 && emptyCounter === 1) {
+      this.board.getSpace(row, emptyIndex).mark = this.player.AIMark;
+      return true;
+    }
+  }
+  const backwardDiagonal = [[1,1],[2,2],[3,3]];
+  const forwardDiagonal = [[1,3],[2,2],[3,1]];
+  let markCounter = 0;
+  let emptyCounter = 0;
+  let emptyRow = 0;
+  let emptyCol = 0;
+  for (let i = 0; i < 3; i++) {
+    let currentRow = backwardDiagonal[i][0];
+    let currentCol = backwardDiagonal[i][1];
+    if (this.board.getSpace(currentRow, currentCol).mark === this.player.AIMark) {
+      markCounter++;
+    } else if (this.board.getSpace(currentRow, currentCol).mark === "") {
+      emptyCounter++;
+      emptyRow = currentRow;
+      emptyCol = currentCol;
+    }
+    if (markCounter === 2 && emptyCounter === 1) {
+      this.board.getSpace(emptyRow, emptyCol).mark = this.player.AIMark;
+      return true;
+    }
+  }
+  markCounter = 0;
+  emptyCounter = 0;
+  emptyRow = 0;
+  emptyCol = 0;
+  for (let i = 0; i < 3; i++) {
+    let currentRow = forwardDiagonal[i][0];
+    let currentCol = forwardDiagonal[i][1];
+    if (this.board.getSpace(currentRow, currentCol).mark === this.player.AIMark) {
+      markCounter++;
+    } else if (this.board.getSpace(currentRow, currentCol).mark === "") {
+      emptyCounter++;
+      emptyRow = currentRow;
+      emptyCol = currentCol;
+    }
+    if (markCounter === 2 && emptyCounter === 1) {
+      this.board.getSpace(emptyRow, emptyCol).mark = this.player.AIMark;
+      return true;
+    }
+  }
+  //2. Block: If the opponent has two in a row, the player must play the third themselves to block the opponent.
+  //3. Fork: Cause a scenario where the player has two ways to win (two non-blocked lines of 2).
+  //4. Blocking an opponent's fork: If there is only one possible fork for the opponent, the player should block it. Otherwise, the player should block all forks in any way that simultaneously allows them to make two in a row. Otherwise, the player should make a two in a row to force the opponent into defending, as long as it does not result in them producing a fork. For example, if "X" has two opposite corners and "O" has the center, "O" must not play a corner move to win. (Playing a corner move in this scenario produces a fork for "X" to win.)
+  //5. Center: A player marks the center. (If it is the first move of the game, playing a corner move gives the second player more opportunities to make a mistake and may therefore be the better choice; however, it makes no difference between perfect players.)
+  //6. Opposite corner: If the opponent is in the corner, the player plays the opposite corner.
+  //7. Empty corner: The player plays in a corner square.
+  //8. Empty side: The player plays in a middle square on any of the four sides.
+};
+
 //UI Logic
 function updateSquares(game) {
   // Updates every square

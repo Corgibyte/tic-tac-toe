@@ -2,18 +2,19 @@
 
 #### By Frank Proulx & Hannah Young
 
-#### _{Brief description of application}_
+#### A tic tac toe game
 
 ## Technologies Used
 
-* _List all_
-* _the major technologies_
-* _you used in your project_
-* _here_
+* HTML
+* CSS
+* Bootstrap
+* Javascript
+* JQuery
 
 ## Description
 
-_{This is a detailed description of your application. Give as much detail as needed to explain what the application does as well as any other information you want users or other developers to have.}_
+A simple website that allows you to play tic tac toe. It provides the player with the choice of X or O, and then displays the result of the game.
 
 ## Setup/Installation Requirements
 
@@ -35,7 +36,7 @@ _{This is a detailed description of your application. Give as much detail as nee
 
 If you have any issues, questions, ideas or concerns, please reach out to me at my email and/or make a contribution to the code via GitHub.
 
-Copyright (c) 2021 Frank Proulx
+Copyright (c) 2021 Frank Proulx & Hannah Young
 
 ## TODO
 
